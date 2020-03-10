@@ -1,0 +1,40 @@
+﻿<Window x:Class="ATM.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ATM"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="402.962" Width="800">
+    <Grid Margin="0,0,-0.4,-0.4">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Button x:Name="Withdraw" Content="Снять деньги" HorizontalAlignment="Left" Margin="525,90,0,0" VerticalAlignment="Top" Width="182" Height="39" Click="Withdraw_Click"/>
+        <Button x:Name="Make" HorizontalAlignment="Left" VerticalAlignment="Top" Width="182" Height="40" Margin="525,174,0,0" Content="Внести деньги" Click="Make_Click"/>
+        <Canvas x:Name="MakingMoney" HorizontalAlignment="Left" Height="368" VerticalAlignment="Top" Width="437" Margin="10,0,0,0" d:IsHidden="True">
+            <Button x:Name="DoMake" Content="Внести" Canvas.Left="145" Canvas.Top="270" Width="104" Height="32" Click="DoMake_Click"/>
+            <TextBox x:Name="MakeCount" Height="36" Canvas.Left="93" TextWrapping="Wrap" Canvas.Top="186" Width="225" FontSize="20"/>
+            <Label Content="Сумма для вноса" Canvas.Left="118" Canvas.Top="114" Height="32" Width="177" FontSize="16"/>
+        </Canvas>
+        <Canvas x:Name="WithdrawMoney" HorizontalAlignment="Left" Height="368" VerticalAlignment="Top" Width="437" Margin="10,0,0,0">
+            <Button x:Name="DoWithdraw" Content="Снять" Canvas.Left="145" Canvas.Top="270" Width="104" Height="32" Click="DoWithdraw_Click"/>
+            <TextBox x:Name="WithDrawCount" Height="36" Canvas.Left="93" TextWrapping="Wrap" Canvas.Top="186" Width="225" FontSize="20"/>
+            <Label Content="Сумма для снятия" Canvas.Left="93" Canvas.Top="140" Height="32" Width="177" FontSize="16"/>
+            <ComboBox x:Name="ComboMoney" Canvas.Left="93" Canvas.Top="105" Width="120" IsSynchronizedWithCurrentItem="True">
+                <ComboBoxItem Content="5000"/>
+                <ComboBoxItem Content="2000"/>
+                <ComboBoxItem Content="1000"/>
+                <ComboBoxItem Content="500"/>
+                <ComboBoxItem Content="200"/>
+                <ComboBoxItem Content="100"/>
+                <ComboBoxItem Content="50"/>
+                <ComboBoxItem Content="Выдать максимально"/>
+            </ComboBox>
+            <Label Content="Выберите тип выдачи денег" Canvas.Left="93" Canvas.Top="58" Height="42" Width="245" FontSize="16"/>
+        </Canvas>
+        <TextBlock x:Name="result" HorizontalAlignment="Left" Margin="60,90,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="16"/>
+        <Button x:Name="ShowMoney" Content="Показать баланс" HorizontalAlignment="Left" Margin="525,256,0,0" VerticalAlignment="Top" Width="182" Height="38" Click="ShowMoney_Click"/>
+
+    </Grid>
+</Window>
