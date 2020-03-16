@@ -30,13 +30,15 @@ namespace ATM
             //var temp = Convert.ToInt32(ComboMoney.SelectedValue.ToString());
             MakingMoney.Visibility = Visibility.Hidden;
             WithdrawMoney.Visibility = Visibility.Hidden;
-
+            ComboMoney.ItemsSource = _atm._atm.GetCostPapers();
+            MakeCombo.ItemsSource = _atm._atm.GetCostPapers();
         }
 
         private void Withdraw_Click(object sender, RoutedEventArgs e)
         {
             _atm._atm.SetAnswer("");
             result.Text = "";
+            WithDrawCount.Text = "";
             WithdrawMoney.Visibility = Visibility.Visible;
             MakingMoney.Visibility = Visibility.Hidden;
         }
@@ -45,6 +47,7 @@ namespace ATM
         {
             _atm._atm.SetAnswer("");
             result.Text = "";
+            MakeCount.Text = "";
             MakingMoney.Visibility = Visibility.Visible;
             WithdrawMoney.Visibility = Visibility.Hidden;
         }
@@ -54,7 +57,15 @@ namespace ATM
             try
             {
                 int count = Convert.ToInt32(MakeCount.Text);
-                _atm._atm.SetMoney(count);
+                if (MakeDrawAutomat.IsChecked.Value)
+                {
+                    _atm._atm.SetMoney(count);
+                }
+                else
+                {
+                    int cost = Convert.ToInt32(MakeCombo.Text);
+                    _atm._atm.SetMoney(count, cost);
+                }
                 result.Text = _atm._atm.GetAnswer();
                 MakingMoney.Visibility = Visibility.Hidden;
             }
@@ -78,7 +89,7 @@ namespace ATM
             try
             {
                 int count = Convert.ToInt32(WithDrawCount.Text);
-                if(ComboMoney.SelectedIndex == 7)
+                if(WithDrawAutomat.IsChecked.Value)
                 {
                     _atm._atm.GetMoney(count);
                 }

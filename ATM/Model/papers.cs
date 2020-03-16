@@ -6,12 +6,32 @@ using System.Threading.Tasks;
 
 namespace ATM.Model
 {
-    public struct Papers
+    struct  Papers
     {
-        public int maxAmount;
-        public int amount;
-        public int cost;
-        public void Add(int _amoumt, int _cost, int _maxAmount)
+        int maxAmount;
+        int amount;
+        int cost;
+        public int GetCost()
+        {
+            return cost;
+        }
+        public int GetMaxAmount()
+        {
+            return maxAmount;
+        }
+        public int GetAmount()
+        {
+            return amount;
+        }
+        public void increaseAmount(int count)
+        {
+            this.amount += count;
+        }
+        public void decreaseAmount(int count)
+        {
+            amount -= count;
+        }
+        public Papers(int _amoumt, int _cost, int _maxAmount)
         {
             maxAmount = _maxAmount;
             amount = _amoumt;

@@ -70,7 +70,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\ATMStarting.cs" />
     <Compile Include="Model\ATMWorking.cs" />
     <Compile Include="Model\papers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">

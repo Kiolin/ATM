@@ -9,82 +9,140 @@ namespace ATM.Model
     class ATMWorking
     {
         string answer = "";
-        Papers[] AllPapers;
+        List<Papers> AllPapers;
         public void SetAnswer(string _answer)
         {
             answer = _answer;
-        }
-        public void SetAllPapers(Papers[] _allPapers)
-        {
-            AllPapers = _allPapers;
         }
         public string GetAnswer()
         {
             return answer;
         }
-        public Papers[] GetPapers()
+        public List<int> GetCostPapers()
         {
-            return AllPapers;
+            List<int> temp = new List<int>();
+            foreach(Papers PaperSimple in AllPapers)
+            {
+                temp.Add(PaperSimple.GetCost());
+            }
+            return temp;
         }
         public void GetMoney(int count)
         {
-            for (int i = 0; i < AllPapers.Length; i++)
-                if ((count / AllPapers[i].cost) != 0)
-                {
-                    var money = count / AllPapers[i].cost;
-                    count = count - (AllPapers[i].cost * money);
-                    if ((AllPapers[i].amount - money) != 0)
+            if (count > 0)
+            {
+                for (int i = 0; i < AllPapers.Count; i++)
+                    if ((count / AllPapers[i].GetCost()) != 0)
                     {
-                        AllPapers[i].amount  -= money;
-                        answer += "Будет выдано" + money + " валют достоинством " + AllPapers[i].cost + "\r\n";
+                        var money = count / AllPapers[i].GetCost();
+                        if ((AllPapers[i].GetAmount() - money) >= 0)
+                        {
+                            count -= AllPapers[i].GetCost() * money;
+                            var temp = new Papers(AllPapers[i].GetAmount(), AllPapers[i].GetCost(), AllPapers[i].GetMaxAmount());
+                            temp.decreaseAmount(money);
+                            AllPapers[i] = temp;
+                            answer += "Будет выдано " + money + " валют достоинством " + AllPapers[i].GetCost() + "\r\n";
+                        }
+                        else answer += "Валюта стоимостью " + AllPapers[i].GetCost() + " отсутствует \r\n";
                     }
-                    else answer += "Валюта стоимостью " + AllPapers[i].cost + " отсутствует \r\n";
-                }
-                else if(answer == "") answer += "Запрашиваемую сумму не возможно выдать валютой"+ AllPapers[i].cost + "\r\n";
-            answer += "Не будет выдано данной валютой сумма " + count + "\r\n";
+                    //else if (answer == "") answer += "Запрашиваемую сумму не возможно выдать валютой" + AllPapers[i].cost + "\r\n";
+                answer += "Не будет выдано сумма " + count + "\r\n";
+            }
+            else answer += "Введённая сумма меньше нуля \r\n";
         }
         public void GetMoney(int count, int MoneyCost)
         {
-            if ((count / MoneyCost) != 0)
+            if (count > 0)
             {
-                var money = count / MoneyCost;
-                count -= MoneyCost * money;
-                for (int i = 0; i < AllPapers.Length; i++)
-                    if ((AllPapers[i].amount - money) != 0 && AllPapers[i].cost == MoneyCost)
-                        AllPapers[i].amount -= money;
-                answer += "Будет выдано " + money + " достоинством " + MoneyCost + "\r\n";
+                if ((count / MoneyCost) != 0)
+                {
+                    var money = count / MoneyCost;
+                    for (int i = 0; i < AllPapers.Count; i++)
+                        if (AllPapers[i].GetCost() == MoneyCost)
+                            if ((AllPapers[i].GetAmount() - money) >= 0)
+                            {
+                                count -= MoneyCost * money;
+                                var temp = new Papers(AllPapers[i].GetAmount(), AllPapers[i].GetCost(), AllPapers[i].GetMaxAmount());
+                                temp.decreaseAmount(money);
+                                AllPapers[i] = temp;
+                                answer += "Будет выдано " + money + " достоинством " + MoneyCost + "\r\n";
+                            }
+                            else answer += "Купюры достоинством " + MoneyCost + " в банкомате отсутствуют\r\n";
+                }
+                else answer += "Запрашиваемую сумму " + count + " невозможно выдать данной купюрой \r\n";
+                answer += "Не будет выдано данной купюрой сумма " + count + "\r\n";
             }
-            else answer += "Запрашиваемую сумму "+ count +" невозможно выдать данной купюрой \r\n";
-            answer += "Не будет выдано данной валютой сумма " + count + "\r\n";
+            else answer += "Введённая сумма меньше нуля \r\n";
         }
         public void SetMoney(int count)
         {
-            for (int i = 0; i < AllPapers.Length; i++)
+            if (count > 0)
             {
-                if ((count / AllPapers[i].cost) != 0)
+                for (int i = 0; i < AllPapers.Count; i++)
                 {
-                    if (AllPapers[i].CheckMaxAmount())
+                    if ((count / AllPapers[i].GetCost()) != 0)
                     {
-                        var money = count / AllPapers[i].cost;
-                        if ((AllPapers[i].amount + money) < AllPapers[i].maxAmount)
+                        if (AllPapers[i].CheckMaxAmount())
                         {
-                            AllPapers[i].amount += money;
-                            answer += "Было внеено " + money + " купюр, достоинства " + AllPapers[i].cost + "\r\n";
-                            count -= money * AllPapers[i].cost;
+                            var money = count / AllPapers[i].GetCost();
+                            if ((AllPapers[i].GetAmount() + money) < AllPapers[i].GetMaxAmount())
+                            {
+                                var temp = new Papers(AllPapers[i].GetAmount(), AllPapers[i].GetCost(), AllPapers[i].GetMaxAmount());
+                                temp.increaseAmount(money);
+                                AllPapers[i] = temp;
+                                answer += "Было внеено " + money + " купюр, достоинства " + AllPapers[i].GetCost() + "\r\n";
+                                count -= money * AllPapers[i].GetCost();
+                            }
                         }
+                        else answer += "Количество купюр достоинством " + AllPapers[i].GetCost() + " максимально \r\n";
                     }
-                    else answer += "Количество купюр достоинство " + AllPapers[i].cost + " максимально \r\n";
                 }
             }
+            else answer += "Введённая сумма меньше нуля \r\n";
+        }
+        public void SetMoney(int count, int MoneyCost)
+        {
+            if (count > 0)
+            {
+                if ((count / MoneyCost) != 0)
+                {
+                    var MoneyCount = count / MoneyCost;
+                    count -= MoneyCost * MoneyCount;
+                    for (int i = 0; i < AllPapers.Count; i++)
+                        if (AllPapers[i].GetCost() == MoneyCost)
+                        {
+                            if ((AllPapers[i].GetAmount() + MoneyCount)<= AllPapers[i].GetMaxAmount())
+                            {
+                                var temp = new Papers(AllPapers[i].GetAmount(),AllPapers[i].GetCost(),AllPapers[i].GetMaxAmount());
+                                temp.increaseAmount(MoneyCount);
+                                AllPapers[i] = temp;
+                                answer += "Будет внесено " + MoneyCount + " номиналом " + MoneyCost + "\r\n";
+                            }
+                            else answer += "Количество купюр достоинством " + MoneyCost + " максимально";
+                        }
+                }
+            }
+            else answer += "Введённая сумма меньше нуля \r\n";
         }
         public string ShowMoney()
         {
             string answer = "";
-            for (int i = 0; i < AllPapers.Length; i++)
+            for (int i = 0; i < AllPapers.Count; i++)
             {
-               answer += "Валют достоинством " + AllPapers[i].cost + " в банкомате в количестве " + AllPapers[i].amount + "шт \r\n";
+                answer += "Валют достоинством " + AllPapers[i].GetCost() + " в банкомате в количестве " + AllPapers[i].GetAmount() + "шт \r\n";
             }
             return answer;
+        }
+        public void SetNominals()
+        {
+            AllPapers = new List<Papers>();
+            AllPapers.Add(new Papers(20,5000,40));
+            AllPapers.Add(new Papers(20,2000,40));
+            AllPapers.Add(new Papers(20,1000,40));
+            AllPapers.Add(new Papers(20,500,40));
+            AllPapers.Add(new Papers(20,200,40));
+            AllPapers.Add(new Papers(20,100,40));
+            AllPapers.Add(new Papers(20,50,40));
         }
     }
 }

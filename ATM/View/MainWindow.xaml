@@ -12,26 +12,22 @@
         </Grid.ColumnDefinitions>
         <Button x:Name="Withdraw" Content="Снять деньги" HorizontalAlignment="Left" Margin="525,90,0,0" VerticalAlignment="Top" Width="182" Height="39" Click="Withdraw_Click"/>
         <Button x:Name="Make" HorizontalAlignment="Left" VerticalAlignment="Top" Width="182" Height="40" Margin="525,174,0,0" Content="Внести деньги" Click="Make_Click"/>
-        <Canvas x:Name="MakingMoney" HorizontalAlignment="Left" Height="368" VerticalAlignment="Top" Width="437" Margin="10,0,0,0" d:IsHidden="True">
+        <Canvas x:Name="MakingMoney" HorizontalAlignment="Left" Height="368" VerticalAlignment="Top" Width="437" Margin="10,0,0,0">
             <Button x:Name="DoMake" Content="Внести" Canvas.Left="145" Canvas.Top="270" Width="104" Height="32" Click="DoMake_Click"/>
             <TextBox x:Name="MakeCount" Height="36" Canvas.Left="93" TextWrapping="Wrap" Canvas.Top="186" Width="225" FontSize="20"/>
-            <Label Content="Сумма для вноса" Canvas.Left="118" Canvas.Top="114" Height="32" Width="177" FontSize="16"/>
+            <Label Content="Сумма для вноса" Canvas.Left="93" Canvas.Top="151" Height="32" Width="177" FontSize="16"/>
+            <ComboBox x:Name="MakeCombo" Canvas.Left="93" Canvas.Top="105" Width="120" IsSynchronizedWithCurrentItem="True"/>
+            <CheckBox x:Name="MakeDrawAutomat" Content="Внести автоматически" Canvas.Left="238" Canvas.Top="105" Height="22" Width="170"/>
+            <Label Content="" Canvas.Left="93" Canvas.Top="73"/>
+            <Label Content="Выберите тип выдачи денег" Canvas.Left="93" Canvas.Top="58" Height="42" Width="245" FontSize="16"/>
         </Canvas>
-        <Canvas x:Name="WithdrawMoney" HorizontalAlignment="Left" Height="368" VerticalAlignment="Top" Width="437" Margin="10,0,0,0">
+        <Canvas x:Name="WithdrawMoney" HorizontalAlignment="Left" Height="368" VerticalAlignment="Top" Width="437" Margin="10,0,0,0" d:IsHidden="True">
             <Button x:Name="DoWithdraw" Content="Снять" Canvas.Left="145" Canvas.Top="270" Width="104" Height="32" Click="DoWithdraw_Click"/>
             <TextBox x:Name="WithDrawCount" Height="36" Canvas.Left="93" TextWrapping="Wrap" Canvas.Top="186" Width="225" FontSize="20"/>
             <Label Content="Сумма для снятия" Canvas.Left="93" Canvas.Top="140" Height="32" Width="177" FontSize="16"/>
-            <ComboBox x:Name="ComboMoney" Canvas.Left="93" Canvas.Top="105" Width="120" IsSynchronizedWithCurrentItem="True">
-                <ComboBoxItem Content="5000"/>
-                <ComboBoxItem Content="2000"/>
-                <ComboBoxItem Content="1000"/>
-                <ComboBoxItem Content="500"/>
-                <ComboBoxItem Content="200"/>
-                <ComboBoxItem Content="100"/>
-                <ComboBoxItem Content="50"/>
-                <ComboBoxItem Content="Выдать максимально"/>
-            </ComboBox>
             <Label Content="Выберите тип выдачи денег" Canvas.Left="93" Canvas.Top="58" Height="42" Width="245" FontSize="16"/>
+            <ComboBox x:Name="ComboMoney" Canvas.Left="93" Canvas.Top="105" Width="120" IsSynchronizedWithCurrentItem="True"/>
+            <CheckBox x:Name="WithDrawAutomat" Content="Выдать автоматически" Canvas.Left="239" Canvas.Top="109" Height="22" Width="170"/>
         </Canvas>
         <TextBlock x:Name="result" HorizontalAlignment="Left" Margin="60,90,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="16"/>
         <Button x:Name="ShowMoney" Content="Показать баланс" HorizontalAlignment="Left" Margin="525,256,0,0" VerticalAlignment="Top" Width="182" Height="38" Click="ShowMoney_Click"/>

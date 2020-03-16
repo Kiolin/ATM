@@ -14,7 +14,7 @@ namespace ATM.Controller
         public ATMWorking _atm = new ATMWorking();
         public void Start()
         {
-            ATMStarting.ATMPapersStarting(_atm);
+            _atm.SetNominals();
         }
     }
 }

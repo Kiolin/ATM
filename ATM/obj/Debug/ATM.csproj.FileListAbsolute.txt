@@ -11,4 +11,3 @@ C:\Users\alexf\source\repos\ATM\ATM\obj\Debug\ATM.exe
 C:\Users\alexf\source\repos\ATM\ATM\obj\Debug\ATM.pdb
 C:\Users\alexf\source\repos\ATM\ATM\obj\Debug\View\MainWindow.g.cs
 C:\Users\alexf\source\repos\ATM\ATM\obj\Debug\View\MainWindow.baml
-C:\Users\alexf\source\repos\ATM\ATM\obj\Debug\ATM.csprojAssemblyReference.cache
